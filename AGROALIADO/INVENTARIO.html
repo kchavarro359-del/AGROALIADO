@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - AGROALIADO</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5ef;
+            padding: 30px;
+        }
+
+        .contenedor {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .encabezado {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #285b38;
+            margin-bottom: 8px;
+        }
+
+        .encabezado p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        h2 {
+            color: #285b38;
+            font-size: 18px;
+            margin: 25px 0 15px;
+        }
+
+        .formulario {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo.completo {
+            grid-column: 1 / 3;
+        }
+
+        label {
+            margin-bottom: 7px;
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #39784b;
+        }
+
+        .resumen {
+            background-color: #f1f5ef;
+            padding: 15px;
+            border-radius: 6px;
+            color: #285b38;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .botones {
+            grid-column: 1 / 3;
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .guardar {
+            background-color: #39784b;
+            color: white;
+        }
+
+        .guardar:hover {
+            background-color: #285b38;
+        }
+
+        .volver {
+            background-color: #e5e9e3;
+            color: #333;
+        }
+
+        .volver:hover {
+            background-color: #d5dcd2;
+        }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eaf1e9;
+            color: #285b38;
+        }
+
+        .estado-bajo {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .estado-normal {
+            color: #39784b;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .formulario {
+                grid-template-columns: 1fr;
+            }
+
+            .campo.completo,
+            .botones {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="encabezado">
+            <h1>📦 Inventario de insumos</h1>
+            <p>Administra los productos utilizados en tus cultivos</p>
+        </div>
+
+        <h2>Registrar nuevo insumo</h2>
+
+        <form class="formulario" id="formularioInventario">
+
+            <div class="campo">
+                <label for="nombre">Nombre del insumo</label>
+                <input type="text" id="nombre"
+                    placeholder="Ej. Semillas de tomate" required>
+            </div>
+
+            <div class="campo">
+                <label for="categoria">Categoría</label>
+                <select id="categoria" required>
+                    <option value="">Seleccionar</option>
+                    <option>Semillas</option>
+                    <option>Fertilizantes</option>
+                    <option>Abonos</option>
+                    <option>Control de plagas</option>
+                    <option>Herramientas</option>
+                    <option>Otros</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="cantidad">Cantidad disponible</label>
+                <input type="number" id="cantidad"
+                    min="0.01" step="0.01"
+                    placeholder="Ej. 20" required>
+            </div>
+
+            <div class="campo">
+                <label for="unidad">Unidad de medida</label>
+                <select id="unidad" required>
+                    <option value="">Seleccionar</option>
+                    <option>Kilogramos</option>
+                    <option>Gramos</option>
+                    <option>Litros</option>
+                    <option>Mililitros</option>
+                    <option>Unidades</option>
+                    <option>Paquetes</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="fecha">Fecha de compra</label>
+                <input type="date" id="fecha" required>
+            </div>
+
+            <div class="campo">
+                <label for="costo">Costo total ($)</label>
+                <input type="number" id="costo"
+                    min="0" step="0.01"
+                    placeholder="Ej. 50000" required>
+            </div>
+
+            <div class="campo completo">
+                <label for="proveedor">Proveedor</label>
+                <input type="text" id="proveedor"
+                    placeholder="Nombre del proveedor">
+            </div>
+
+            <div class="campo">
+                <label for="minimo">Cantidad mínima de existencias</label>
+                <input type="number" id="minimo"
+                    min="0" step="0.01"
+                    placeholder="Ej. 5" required>
+            </div>
+
+            <div class="campo">
+                <label for="observaciones">Observaciones</label>
+                <input type="text" id="observaciones"
+                    placeholder="Información adicional">
+            </div>
+
+            <div class="campo completo">
+                <div class="resumen">
+                    Valor total registrado:
+                    $<span id="valorTotal">0</span>
+                </div>
+            </div>
+
+            <div class="botones">
+                <button type="button" class="volver"
+                    onclick="window.location.href='PRINCIPAL.html'">
+                    Volver
+                </button>
+
+                <button type="submit" class="guardar">
+                    Guardar insumo
+                </button>
+            </div>
+
+        </form>
+
+        <h2>Existencias registradas</h2>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Insumo</th>
+                        <th>Cantidad</th>
+                        <th>Unidad</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaInventario">
+                    <tr>
+                        <td colspan="4">Aún no hay insumos registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+
+        const cantidad = document.getElementById("cantidad");
+        const costo = document.getElementById("costo");
+
+        function calcularValor() {
+
+            let total = Number(costo.value) || 0;
+
+            document.getElementById("valorTotal").textContent =
+                total.toLocaleString("es-CO");
+
+        }
+
+        cantidad.addEventListener("input", calcularValor);
+        costo.addEventListener("input", calcularValor);
+
+        document.getElementById("formularioInventario")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                let nombre = document.getElementById("nombre").value;
+                let unidades = Number(cantidad.value);
+                let unidad = document.getElementById("unidad").value;
+                let minimo = Number(document.getElementById("minimo").value);
+
+                let estado = unidades <= minimo
+                    ? "Existencias bajas"
+                    : "Disponible";
+
+                let clase = unidades <= minimo
+                    ? "estado-bajo"
+                    : "estado-normal";
+
+                let tabla = document.getElementById("tablaInventario");
+
+                if (tabla.innerHTML.includes("Aún no hay insumos")) {
+                    tabla.innerHTML = "";
+                }
+
+                let fila = tabla.insertRow();
+
+                fila.innerHTML = `
+                    <td>${nombre}</td>
+                    <td>${unidades}</td>
+                    <td>${unidad}</td>
+                    <td class="${clase}">${estado}</td>
+                `;
+
+                alert("Insumo agregado a la lista de existencias.");
+
+                this.reset();
+                calcularValor();
+
+            });
+
+    </script>
+
+</body>
+</html>

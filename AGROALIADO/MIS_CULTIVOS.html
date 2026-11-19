@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis cultivos - AGROALIADO</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5ef;
+            padding: 30px;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .encabezado {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #285b38;
+            margin-bottom: 8px;
+        }
+
+        .encabezado p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .boton-agregar {
+            background-color: #39784b;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .boton-agregar:hover {
+            background-color: #285b38;
+        }
+
+        .buscador {
+            background-color: white;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .buscador input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .lista-cultivos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .tarjeta {
+            background-color: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        }
+
+        .tarjeta h2 {
+            color: #285b38;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .informacion {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .estado {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 10px;
+            background-color: #e4f2e5;
+            color: #285b38;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .acciones button {
+            padding: 9px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .ver {
+            background-color: #e4f0e6;
+            color: #285b38;
+        }
+
+        .editar {
+            background-color: #e8edf5;
+            color: #34547c;
+        }
+
+        .eliminar {
+            background-color: #f9e6e4;
+            color: #b33a32;
+        }
+
+        .vacio {
+            grid-column: 1 / 3;
+            background-color: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: #777;
+        }
+
+        .vacio h2 {
+            color: #285b38;
+            margin-bottom: 10px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-top: 25px;
+            color: #39784b;
+            text-decoration: none;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 15px;
+            }
+
+            .lista-cultivos {
+                grid-template-columns: 1fr;
+            }
+
+            .vacio {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="encabezado">
+            <div>
+                <h1>🌱 Mis cultivos</h1>
+                <p>Consulta y administra tus cultivos registrados.</p>
+            </div>
+
+            <a href="AGREGAR_CULTIVO.html" class="boton-agregar">
+                + Agregar cultivo
+            </a>
+        </div>
+
+        <div class="buscador">
+            <input
+                type="text"
+                id="buscar"
+                placeholder="Buscar un cultivo por su nombre..."
+            >
+        </div>
+
+        <div class="lista-cultivos" id="listaCultivos">
+
+            <div class="vacio">
+                <h2>🌿 No hay cultivos registrados</h2>
+                <p>Cuando agregues un cultivo, aparecerá en esta sección.</p>
+            </div>
+
+        </div>
+
+        <a href="PRINCIPAL.html" class="volver">
+            ← Volver al inicio
+        </a>
+
+    </div>
+
+    <script>
+
+        // Obtener los cultivos almacenados
+        function obtenerCultivos() {
+            return JSON.parse(localStorage.getItem("cultivos")) || [];
+        }
+
+        // Mostrar los cultivos en pantalla
+        function mostrarCultivos(filtro = "") {
+
+            const lista = document.getElementById("listaCultivos");
+            const cultivos = obtenerCultivos();
+
+            lista.innerHTML = "";
+
+            const filtrados = cultivos.filter(cultivo =>
+                cultivo.nombre.toLowerCase().includes(filtro.toLowerCase())
+            );
+
+            if (filtrados.length === 0) {
+                lista.innerHTML = `
+                    <div class="vacio">
+                        <h2>🌿 No se encontraron cultivos</h2>
+                        <p>Agrega un cultivo o intenta otra búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtrados.forEach(cultivo => {
+
+                const tarjeta = document.createElement("div");
+                tarjeta.className = "tarjeta";
+
+                const titulo = document.createElement("h2");
+                titulo.textContent = "🌱 " + cultivo.nombre;
+
+                const informacion = document.createElement("div");
+                informacion.className = "informacion";
+
+                const datos = [
+                    "Variedad: " + (cultivo.variedad || "No especificada"),
+                    "Tipo: " + (cultivo.tipo || "No especificado"),
+                    "Fecha de siembra: " + (cultivo.fecha || "No registrada"),
+                    "Área: " + (cultivo.area || "No registrada") + " " +
+                        (cultivo.unidad || ""),
+                    "Ubicación: " + (cultivo.ubicacion || "No especificada")
+                ];
+
+                datos.forEach(dato => {
+                    const parrafo = document.createElement("p");
+                    parrafo.textContent = dato;
+                    informacion.appendChild(parrafo);
+                });
+
+                const estado = document.createElement("span");
+                estado.className = "estado";
+                estado.textContent = "Registrado";
+
+                const acciones = document.createElement("div");
+                acciones.className = "acciones";
+
+                const ver = document.createElement("button");
+                ver.className = "ver";
+                ver.textContent = "Consultar";
+                ver.onclick = () => consultarCultivo(cultivo);
+
+                const editar = document.createElement("button");
+                editar.className = "editar";
+                editar.textContent = "Editar";
+                editar.onclick = () => editarCultivo(cultivo.id);
+
+                const eliminar = document.createElement("button");
+                eliminar.className = "eliminar";
+                eliminar.textContent = "Eliminar";
+                eliminar.onclick = () => eliminarCultivo(cultivo.id);
+
+                acciones.append(ver, editar, eliminar);
+
+                tarjeta.append(titulo, informacion, estado, acciones);
+
+                lista.appendChild(tarjeta);
+            });
+        }
+
+        // Consultar información
+        function consultarCultivo(cultivo) {
+
+            alert(
+                "Información del cultivo:\n\n" +
+                "Nombre: " + cultivo.nombre + "\n" +
+                "Variedad: " + (cultivo.variedad || "No especificada") + "\n" +
+                "Tipo: " + cultivo.tipo + "\n" +
+                "Fecha de siembra: " + cultivo.fecha + "\n" +
+                "Área: " + cultivo.area + " " + cultivo.unidad + "\n" +
+                "Ubicación: " + cultivo.ubicacion + "\n" +
+                "Observaciones: " + (cultivo.observaciones || "Ninguna")
+            );
+        }
+
+        // Editar información del cultivo
+        function editarCultivo(id) {
+
+            let cultivos = obtenerCultivos();
+
+            let cultivo = cultivos.find(item => item.id === id);
+
+            if (!cultivo) return;
+
+            let nuevoNombre = prompt(
+                "Escribe el nuevo nombre del cultivo:",
+                cultivo.nombre
+            );
+
+            if (nuevoNombre === null) return;
+
+            if (nuevoNombre.trim() === "") {
+                alert("El nombre no puede estar vacío.");
+                return;
+            }
+
+            cultivo.nombre = nuevoNombre.trim();
+
+            localStorage.setItem("cultivos", JSON.stringify(cultivos));
+
+            mostrarCultivos();
+
+            alert("Cultivo actualizado correctamente.");
+        }
+
+        // Eliminar un cultivo
+        function eliminarCultivo(id) {
+
+            let confirmar = confirm(
+                "¿Estás segura de que deseas eliminar este cultivo?"
+            );
+
+            if (!confirmar) return;
+
+            let cultivos = obtenerCultivos();
+
+            cultivos = cultivos.filter(item => item.id !== id);
+
+            localStorage.setItem("cultivos", JSON.stringify(cultivos));
+
+            mostrarCultivos();
+
+            alert("Cultivo eliminado correctamente.");
+        }
+
+        // Buscar cultivos
+        document.getElementById("buscar")
+            .addEventListener("input", function() {
+                mostrarCultivos(this.value);
+            });
+
+        // Cargar los cultivos al abrir la página
+        mostrarCultivos();
+
+    </script>
+
+</body>
+</html>

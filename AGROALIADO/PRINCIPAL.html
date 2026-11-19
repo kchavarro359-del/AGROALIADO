@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGROALIADO | Inicio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f6f7f2;
+            color: #29382d;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* MENU LATERAL */
+
+        .sidebar {
+            width: 245px;
+            background: #244c35;
+            color: white;
+            min-height: 100vh;
+            padding: 28px 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 12px 5px 35px;
+        }
+
+        .logo i {
+            font-size: 38px;
+            color: #b8d89b;
+        }
+
+        .logo h2 {
+            font-size: 22px;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            color: #d1dfd0;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #e9f0e9;
+            padding: 13px 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .menu a i {
+            width: 22px;
+            font-size: 17px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: #477b45;
+            color: white;
+        }
+
+        .logout {
+            margin-top: auto;
+            padding-top: 25px;
+        }
+
+        .logout a {
+            color: #f1d9d4;
+            text-decoration: none;
+            padding: 12px;
+            display: block;
+            font-size: 13px;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+
+        .main {
+            flex: 1;
+            padding: 30px 38px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topbar h3 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #dce9d6;
+            color: #315b3d;
+            display: grid;
+            place-items: center;
+            font-size: 18px;
+        }
+
+        /* BIENVENIDA */
+
+        .welcome {
+            min-height: 225px;
+            border-radius: 18px;
+            padding: 35px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg,
+                    rgba(25, 54, 35, .86),
+                    rgba(25, 54, 35, .35)),
+                url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv3BTGHlqWZM1b1BZ9G6nDhFe14iXWtxAbJafLt6ZF0s7BXnRrF5Ckw9ej1drulzm7l_71OGoutf38b7hzysOlET2IVIKejcDLs26_UHWomLApq8MzoF30QT6LQadln9gugCecztYbTa8/s1600/IMAGENES+ENERO+19-2010+001.jpg");
+
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin-bottom: 35px;
+        }
+
+        .welcome h1 {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            font-size: 14px;
+            max-width: 450px;
+            line-height: 1.7;
+        }
+
+        .welcome span {
+            display: inline-block;
+            margin-top: 17px;
+            background: rgba(255,255,255,.18);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* TITULOS */
+
+        .section-title {
+            margin-bottom: 18px;
+        }
+
+        .section-title h2 {
+            font-size: 19px;
+            color: #294b34;
+        }
+
+        .section-title p {
+            color: #849084;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* TARJETAS */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 24px 18px;
+            min-height: 175px;
+            border: 1px solid #e8ece4;
+            text-decoration: none;
+            color: #304536;
+            transition: .2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 7px 20px rgba(40,70,45,.09);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .green {
+            background: #e6f0e2;
+            color: #3e7044;
+        }
+
+        .beige {
+            background: #f5eddf;
+            color: #96733c;
+        }
+
+        .blue {
+            background: #e7eef3;
+            color: #51728b;
+        }
+
+        .purple {
+            background: #eee9f3;
+            color: #80638d;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            font-size: 11px;
+            color: #89928a;
+            line-height: 1.5;
+        }
+
+        /* RECORDATORIOS */
+
+        .reminders {
+            background: white;
+            border: 1px solid #e8ece4;
+            padding: 22px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .reminders h2 {
+            font-size: 17px;
+            margin-bottom: 17px;
+            color: #294b34;
+        }
+
+        .reminder {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eef0eb;
+        }
+
+        .reminder:last-child {
+            border-bottom: none;
+        }
+
+        .reminder i {
+            width: 38px;
+            height: 38px;
+            background: #A5D6A7;
+            color: #4c7748;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+        }
+
+        .reminder strong {
+            font-size: 12px;
+            display: block;
+        }
+
+        .reminder small {
+            font-size: 11px;
+            color: #929b91;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+            .sidebar {
+                width: 205px;
+            }
+
+            .main {
+                padding: 25px 20px;
+            }
+
+            .cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .menu {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                background-color: #A5D6A7;
+            }
+
+            .logout {
+                margin-top: 10px;
+            }
+
+            .main {
+                padding: 20px 14px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome {
+                padding: 25px;
+            }
+
+            .welcome h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MENU LATERAL -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-seedling"></i>
+            <h2>AGROALIADO</h2>
+        </div>
+
+        <nav class="menu">
+
+            <a href="#" class="active">
+                <i class="fa-solid fa-house"></i>
+                Inicio
+            </a>
+
+            <a href="MIS_CULTIVOS.html">
+                <i class="fa-solid fa-leaf"></i>
+                Mis cultivos
+            </a>
+            <a href="ACTIVIDAES_AGRICOLAS.html">
+                <i class="fa-solid fa-calendar-days"></i>
+                Actividades agrícolas
+            </a>
+
+            <a href="INVENTARIO.html">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                Inventario
+            </a>
+            <a href="MIS_INFORMES.html">
+                <i class="fa-solid fa-chart-column"></i>
+                Mis informes
+            </a>
+
+        </nav>
+
+        <div class="logout">
+            <a href="INDEX.html">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Cerrar sesión
+            </a>
+        </div>
+
+    </aside>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <h3>Panel principal</h3>
+
+            <div class="user">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <span>Mi perfil</span>
+            </div>
+
+        </header>
+
+
+        <!-- BIENVENIDA -->
+
+        <section class="welcome">
+
+            <h1>¡Bienvenido a AGROALIADO!</h1>
+            <p>
+                <br><br><br><br>Organiza tus cultivos, registra tus actividades
+                y lleva el control de tu producción agrícola
+                desde un solo lugar.
+            </p>
+
+        </section>
+
+
+        <!-- ACCESOS PRINCIPALES -->
+
+        <section>
+
+            <div class="section-title">
+                <h2>¿Qué deseas hacer hoy?</h2>
+                <p>Selecciona una opción para comenzar.</p>
+            </div>
+
+            <div class="cards">
+
+                <a href="AGREGAR_CULTIVO.html" class="card">
+                    <div class="card-icon green">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3>Agregar cultivo</h3>
+                    <p>Registra un nuevo cultivo y sus datos de siembra.</p>
+                </a>
+
+                <a href="REGISTRO_RECOLECCION.html" class="card">
+                    <div class="card-icon beige">
+                        <i class="fa-solid fa-wheat-awn"></i>
+                    </div>
+                    <h3>Registrar recolección</h3>
+                    <p>Registra las cosechas y cantidades obtenidas.</p>
+                </a>
+
+                <a href="MIS_CULTIVOS.html" class="card">
+                    <div class="card-icon blue">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <h3>Mis cultivos</h3>
+                    <p>Consulta, modifica y administra tus cultivos.</p>
+                </a>
+
+                <a href="ACTIVIDAES_AGRICOLAS.html" class="card">
+                    <div class="card-icon green">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h3>Actividades agrícolas</h3>
+                    <p>Registra riegos, fertilización y mantenimiento.</p>
+                </a>
+
+                <a href="INVENTARIO.html" class="card">
+                    <div class="card-icon beige">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <h3>Inventario</h3>
+                    <p>Administra semillas, fertilizantes e insumos.</p>
+                </a>
+
+                <a href="MIS_INFORMES.html" class="card">
+                    <div class="card-icon purple">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3>Mis informes</h3>
+                    <p>Consulta tu producción, gastos y ganancias.</p>
+                </a>
+
+            </div>
+
+        
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

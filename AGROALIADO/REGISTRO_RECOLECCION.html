@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar recolección - AGROALIADO</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5ef;
+            padding: 30px;
+        }
+
+        .contenedor {
+            max-width: 750px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .encabezado {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            color: #285b38;
+            margin-bottom: 8px;
+        }
+
+        .encabezado p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .formulario {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .campo.completo {
+            grid-column: 1 / 3;
+        }
+
+        label {
+            margin-bottom: 7px;
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #39784b;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .resultado {
+            background-color: #f1f5ef;
+            padding: 15px;
+            border-radius: 6px;
+            color: #285b38;
+            font-weight: bold;
+        }
+
+        .botones {
+            grid-column: 1 / 3;
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .guardar {
+            background-color: #39784b;
+            color: white;
+        }
+
+        .guardar:hover {
+            background-color: #285b38;
+        }
+
+        .volver {
+            background-color: #e5e9e3;
+            color: #333;
+        }
+
+        .volver:hover {
+            background-color: #d5dcd2;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .formulario {
+                grid-template-columns: 1fr;
+            }
+
+            .campo.completo,
+            .botones {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="encabezado">
+            <h1>🌾 Registrar recolección</h1>
+            <p>Registra los resultados de la cosecha de tus cultivos</p>
+        </div>
+
+        <form class="formulario" id="formularioRecoleccion">
+
+            <div class="campo completo">
+                <label for="cultivo">Nombre del cultivo</label>
+                <input type="text" id="cultivo"
+                    placeholder="Ej. Tomate" required>
+            </div>
+
+            <div class="campo">
+                <label for="fecha">Fecha de recolección</label>
+                <input type="date" id="fecha" required>
+            </div>
+
+            <div class="campo">
+                <label for="unidad">Unidad de medida</label>
+                <select id="unidad" required>
+                    <option value="">Seleccionar</option>
+                    <option value="kg">Kilogramos</option>
+                    <option value="g">Gramos</option>
+                    <option value="canastillas">Canastillas</option>
+                    <option value="unidades">Unidades</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="recolectada">Cantidad recolectada</label>
+                <input type="number" id="recolectada"
+                    min="0" step="0.01" placeholder="Ej. 100" required>
+            </div>
+
+            <div class="campo">
+                <label for="vendida">Cantidad vendida</label>
+                <input type="number" id="vendida"
+                    min="0" step="0.01" placeholder="Ej. 60" value="0">
+            </div>
+
+            <div class="campo">
+                <label for="perdida">Cantidad perdida</label>
+                <input type="number" id="perdida"
+                    min="0" step="0.01" placeholder="Ej. 5" value="0">
+            </div>
+
+            <div class="campo">
+                <label for="precio">Precio por unidad ($)</label>
+                <input type="number" id="precio"
+                    min="0" step="0.01" placeholder="Ej. 3000">
+            </div>
+
+            <div class="campo completo">
+                <label>Información de la producción</label>
+                <div class="resultado">
+                    Cantidad disponible:
+                    <span id="disponible">0</span>
+                    <span id="unidadResultado"></span>
+                    <br><br>
+                    Ingreso por ventas:
+                    $<span id="ingreso">0</span>
+                </div>
+            </div>
+
+            <div class="campo completo">
+                <label for="comprador">Comprador o destinatario</label>
+                <input type="text" id="comprador"
+                    placeholder="Ej. Mercado local o nombre del comprador">
+            </div>
+
+            <div class="campo completo">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones"
+                    placeholder="Describe el estado de la cosecha u otros detalles..."></textarea>
+            </div>
+
+            <div class="botones">
+                <button type="button" class="volver"
+                    onclick="window.location.href='PRINCIPAL.html'">
+                    Volver
+                </button>
+
+                <button type="submit" class="guardar">
+                    Guardar recolección
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <script>
+        const recolectada = document.getElementById("recolectada");
+        const vendida = document.getElementById("vendida");
+        const perdida = document.getElementById("perdida");
+        const precio = document.getElementById("precio");
+        const unidad = document.getElementById("unidad");
+
+        function calcularResultados() {
+
+            let total = Number(recolectada.value) || 0;
+            let venta = Number(vendida.value) || 0;
+            let perdidaTotal = Number(perdida.value) || 0;
+            let precioUnidad = Number(precio.value) || 0;
+
+            let disponible = total - venta - perdidaTotal;
+            let ingreso = venta * precioUnidad;
+
+            document.getElementById("disponible").textContent =
+                disponible >= 0 ? disponible.toFixed(2) : "Cantidad inválida";
+
+            document.getElementById("ingreso").textContent =
+                ingreso.toLocaleString("es-CO");
+
+            document.getElementById("unidadResultado").textContent =
+                unidad.value;
+        }
+
+        recolectada.addEventListener("input", calcularResultados);
+        vendida.addEventListener("input", calcularResultados);
+        perdida.addEventListener("input", calcularResultados);
+        precio.addEventListener("input", calcularResultados);
+        unidad.addEventListener("change", calcularResultados);
+
+        document.getElementById("formularioRecoleccion")
+            .addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                let total = Number(recolectada.value);
+                let venta = Number(vendida.value) || 0;
+                let perdidaTotal = Number(perdida.value) || 0;
+
+                if (venta + perdidaTotal > total) {
+                    alert("La cantidad vendida y perdida no puede superar la cantidad recolectada.");
+                    return;
+                }
+
+                alert("Los datos de la recolección fueron validados correctamente. Próximamente podrás guardarlos en la base de datos.");
+
+            });
+    </script>
+
+</body>
+</html>

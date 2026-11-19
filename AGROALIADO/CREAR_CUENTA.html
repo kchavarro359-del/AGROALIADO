@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crear cuenta - AGROALIADO</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px 15px;
+
+            background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQbGpyUWu3z5Qwoown6K955tc97f7-h0BtEucPVh8MH-ShVJMIYDRsgicm&s=10");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .registro-container {
+            background-color: white;
+            width: 420px;
+            max-width: 100%;
+            padding: 30px 35px;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            color: #285b38;
+            margin-bottom: 8px;
+            font-size: 27px;
+        }
+
+        .subtitulo {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #39784b;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #39784b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background-color: #285b38;
+        }
+
+        .enlaces {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .enlaces a {
+            color: #39784b;
+            text-decoration: none;
+        }
+
+        .enlaces a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="registro-container">
+
+        <div class="logo">🌱</div>
+
+        <h1>AGROALIADO</h1>
+
+        <p class="subtitulo">
+            Crea tu cuenta y comienza a gestionar tus cultivos
+        </p>
+
+        <form id="formRegistro">
+
+            <div class="campo">
+                <label for="nombre">Nombre completo</label>
+                <input
+                    type="text"
+                    id="nombre"
+                    placeholder="Ingresa tu nombre completo"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="correo">Correo electrónico</label>
+                <input
+                    type="email"
+                    id="correo"
+                    placeholder="Ingresa tu correo electrónico"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="telefono">Número de teléfono</label>
+                <input
+                    type="tel"
+                    id="telefono"
+                    placeholder="Ingresa tu teléfono"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="contrasena">Contraseña</label>
+                <input
+                    type="password"
+                    id="contrasena"
+                    placeholder="Crea una contraseña"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="confirmar">Confirmar contraseña</label>
+                <input
+                    type="password"
+                    id="confirmar"
+                    placeholder="Repite tu contraseña"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Crear cuenta
+            </button>
+
+        </form>
+
+        <div class="enlaces">
+            <p>¿Ya tienes una cuenta?</p>
+            <a href="INDEX.html">Iniciar sesión</a>
+        </div>
+
+    </div>
+
+    <script>
+
+        document.getElementById("formRegistro").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const nombre = document.getElementById("nombre").value;
+            const correo = document.getElementById("correo").value;
+            const telefono = document.getElementById("telefono").value;
+            const contrasena = document.getElementById("contrasena").value;
+            const confirmar = document.getElementById("confirmar").value;
+
+            if (contrasena !== confirmar) {
+                alert("Las contraseñas no coinciden.");
+                return;
+            }
+
+            const usuario = {
+                nombre: nombre,
+                correo: correo,
+                telefono: telefono,
+                contrasena: contrasena
+            };
+
+            let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+            const existe = usuarios.some(u => u.correo === correo);
+
+            if (existe) {
+                alert("Este correo ya se encuentra registrado.");
+                return;
+            }
+
+            usuarios.push(usuario);
+
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+            alert("¡Cuenta creada correctamente!");
+
+            window.location.href = "login.html";
+
+        });
+
+    </script>
+
+</body>
+</html>

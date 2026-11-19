@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis informes | AGROALIADO</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f3f6f1;
+            color: #333;
+        }
+
+        header {
+            background: #245b3c;
+            color: white;
+            padding: 22px 35px;
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        header p {
+            margin-top: 7px;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #245b3c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .introduccion {
+            margin-bottom: 25px;
+        }
+
+        .introduccion h2 {
+            color: #245b3c;
+            margin-bottom: 8px;
+        }
+
+        .filtros {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .campo {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        button {
+            background: #39794e;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            margin-top: 22px;
+        }
+
+        button:hover {
+            background: #245b3c;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            border-left: 5px solid #39794e;
+        }
+
+        .tarjeta h3 {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .tarjeta p {
+            font-size: 25px;
+            font-weight: bold;
+            color: #245b3c;
+        }
+
+        .seccion {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .seccion h2 {
+            color: #245b3c;
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #eaf1e9;
+            color: #245b3c;
+        }
+
+        .mensaje {
+            color: #777;
+            padding: 15px 0;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            main {
+                padding: 0 12px;
+            }
+
+            .filtros {
+                flex-direction: column;
+            }
+
+            .seccion {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>AGROALIADO</h1>
+        <p>Informes y seguimiento de la producción agrícola</p>
+    </header>
+
+    <main>
+
+        <a href="PRINCIPAL.html" class="volver">← Volver al inicio</a>
+
+        <section class="introduccion">
+            <h2>Mis informes</h2>
+            <p>
+                Consulta y revisa la información de tus cultivos
+                y el desarrollo de tu producción agrícola.
+            </p>
+        </section>
+
+        <!-- FILTROS -->
+        <section class="filtros">
+
+            <div class="campo">
+                <label for="cultivo">Seleccionar cultivo</label>
+                <select id="cultivo">
+                    <option value="todos">Todos los cultivos</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="fechaInicio">Fecha inicial</label>
+                <input type="date" id="fechaInicio">
+            </div>
+
+            <div class="campo">
+                <label for="fechaFin">Fecha final</label>
+                <input type="date" id="fechaFin">
+            </div>
+
+            <div>
+                <button type="button" onclick="generarInforme()">
+                    Consultar informe
+                </button>
+            </div>
+
+        </section>
+
+        <!-- RESUMEN -->
+        <section class="resumen">
+
+            <div class="tarjeta">
+                <h3>Cultivos registrados</h3>
+                <p id="totalCultivos">0</p>
+            </div>
+
+            <div class="tarjeta">
+                <h3>Área cultivada</h3>
+                <p id="areaTotal">0</p>
+            </div>
+
+            <div class="tarjeta">
+                <h3>Recolecciones registradas</h3>
+                <p id="totalRecolecciones">0</p>
+            </div>
+
+            <div class="tarjeta">
+                <h3>Ventas registradas</h3>
+                <p id="totalVentas">$0</p>
+            </div>
+
+        </section>
+
+        <!-- DETALLE DE CULTIVOS -->
+        <section class="seccion">
+
+            <h2>Detalle de mis cultivos</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Variedad</th>
+                        <th>Fecha de siembra</th>
+                        <th>Área</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaCultivos">
+                </tbody>
+            </table>
+
+            <p id="sinResultados" class="mensaje" style="display:none;">
+                No hay cultivos registrados para los filtros seleccionados.
+            </p>
+
+        </section>
+
+    </main>
+
+    <script>
+
+        // Recuperar los cultivos guardados
+        function obtenerCultivos() {
+            return JSON.parse(localStorage.getItem("cultivos")) || [];
+        }
+
+        // Cargar los cultivos en el filtro
+        function cargarFiltro() {
+
+            const cultivos = obtenerCultivos();
+            const selector = document.getElementById("cultivo");
+
+            cultivos.forEach(cultivo => {
+
+                const opcion = document.createElement("option");
+
+                opcion.value = cultivo.id;
+                opcion.textContent = cultivo.nombre;
+
+                selector.appendChild(opcion);
+
+            });
+        }
+
+        // Generar el informe
+        function generarInforme() {
+
+            const cultivos = obtenerCultivos();
+
+            const seleccionado = document.getElementById("cultivo").value;
+            const inicio = document.getElementById("fechaInicio").value;
+            const fin = document.getElementById("fechaFin").value;
+
+            // Filtrar por cultivo
+            let resultados = cultivos.filter(cultivo => {
+
+                if (seleccionado !== "todos" &&
+                    String(cultivo.id) !== seleccionado) {
+                    return false;
+                }
+
+                if (inicio && cultivo.fecha < inicio) {
+                    return false;
+                }
+
+                if (fin && cultivo.fecha > fin) {
+                    return false;
+                }
+
+                return true;
+
+            });
+
+            // Mostrar cantidad de cultivos
+            document.getElementById("totalCultivos").textContent =
+                resultados.length;
+
+            // Calcular área total
+            const area = resultados.reduce((total, cultivo) => {
+                return total + (Number(cultivo.area) || 0);
+            }, 0);
+
+            document.getElementById("areaTotal").textContent =
+                area.toLocaleString("es-CO");
+
+            // Mostrar recolecciones y ventas
+            // Pendiente de conectar con esos módulos
+            document.getElementById("totalRecolecciones").textContent = "0";
+            document.getElementById("totalVentas").textContent = "$0";
+
+            // Mostrar tabla
+            const tabla = document.getElementById("tablaCultivos");
+
+            tabla.innerHTML = "";
+
+            resultados.forEach(cultivo => {
+
+                const fila = document.createElement("tr");
+
+                const valores = [
+                    cultivo.nombre,
+                    cultivo.variedad,
+                    cultivo.fecha,
+                    (cultivo.area || 0) + " " + (cultivo.unidad || "")
+                ];
+
+                valores.forEach(valor => {
+                    const celda = document.createElement("td");
+                    celda.textContent = valor || "-";
+                    fila.appendChild(celda);
+                });
+
+                tabla.appendChild(fila);
+
+            });
+
+            document.getElementById("sinResultados").style.display =
+                resultados.length === 0 ? "block" : "none";
+
+        }
+
+        // Ejecutar al abrir la página
+        cargarFiltro();
+        generarInforme();
+
+    </script>
+
+</body>
+</html>

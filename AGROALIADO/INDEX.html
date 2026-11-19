@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - AGROALIADO</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjv3BTGHlqWZM1b1BZ9G6nDhFe14iXWtxAbJafLt6ZF0s7BXnRrF5Ckw9ej1drulzm7l_71OGoutf38b7hzysOlET2IVIKejcDLs26_UHWomLApq8MzoF30QT6LQadln9gugCecztYbTa8/s1600/IMAGENES+ENERO+19-2010+001.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+
+        .login-container {
+            background-color: white;
+            width: 400px;
+            padding: 35px;
+            height: 585px;
+            border-radius: 2px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #285b38;
+            margin-bottom: 8px;
+        }
+
+        .subtitulo {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #39784b;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #39784b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #285b38;
+        }
+
+        .enlaces {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .enlaces a {
+            display: block;
+            color: #39784b;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .enlaces a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="logo">🌱</div>
+
+        <h1>AGROALIADO</h1>
+
+        <p class="subtitulo">
+            Tu aliado en la gestión agrícola
+        </p>
+
+        <form>
+            <label for="correo">Correo electrónico</label>
+            <input
+                type="email"
+                id="correo"
+                placeholder="Ingresa tu correo"
+                required
+            >
+
+            <label for="contrasena">Contraseña</label>
+            <input
+                type="password"
+                id="contrasena"
+                placeholder="Ingresa tu contraseña"
+                required
+            >
+
+            <button type="button" onclick="window.location.href='PRINCIPAL.html'">
+    Iniciar sesión
+</button>
+
+        <div class="enlaces">
+            <a href="CREAR_CUENTA.html">Crear una cuenta</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
